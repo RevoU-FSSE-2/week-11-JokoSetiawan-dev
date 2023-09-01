@@ -1,7 +1,7 @@
 CREATE DATABASE sellout_tracking;
 USE sellout_tracking;
 
-CREATE TABLE auth_table (
+CREATE TABLE user_table (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     role ENUM('admin', 'sales') NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE auth_table (
 );
 
 
-INSERT INTO auth_table (name, role, target, achivement, gap)
+INSERT INTO user_table (name, role, target, achivement, gap)
 VALUES
 ('Rafi', 'sales' '100000000', '100000000', '0');
 
