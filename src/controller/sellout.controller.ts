@@ -28,7 +28,7 @@ const findSelloutId = async (req: Request, res: Response, next: NextFunction) =>
   FROM
       sellout_table AS st
   WHERE
-      st.user_id = 2
+      st.user_id = ?
   GROUP BY
       st.id, st.user_id, st.sku, st.quantity, st.amount;  
     `, id);

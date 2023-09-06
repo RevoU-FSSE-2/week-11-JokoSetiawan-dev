@@ -9,26 +9,26 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const saltRounds = 10;
+const secretKey = process.env.SECRET_KEY || "default-secret-key";
 const userRegister = async (req, res, next) => {
     try {
-        const body = req.body;
-        if (!body.username || !body.password || !body.role) {
+        const { username, password, role } = req.body;
+        if (!username || !password || !role) {
             return res.status(400).json({
                 success: false,
                 message: "Username, password, and role are required fields",
             });
         }
-        const hashedPassword = await bcrypt_1.default.hash(body.password, saltRounds);
+        const hashedPassword = await bcrypt_1.default.hash(password, saltRounds);
         const insertResult = await db_connection_1.db.query(`INSERT INTO sellout_tracking.auth_table (username, password, role)
-      VALUES (?, ?, ?)`, [body.username, hashedPassword, body.role]);
-        const id = insertResult.insertId;
-        const token = jsonwebtoken_1.default.sign({ id }, process.env.SECRET_KEY || "default-secret-key", { expiresIn: "100y" });
-        const selectResult = await db_connection_1.db.query(`SELECT * FROM sellout_tracking.auth_table WHERE id = ?`, [id]);
-        const user = selectResult[0];
+      VALUES (?, ?, ?)`, [username, hashedPassword, role]);
+        const id = 123; // Replace with the actual user ID from the database
+        const token = jsonwebtoken_1.default.sign({ id, username, role }, secretKey, {
+            expiresIn: "1h",
+        });
         res.status(200).json({
             success: true,
-            data: user,
-            token,
+            message: "Registration successful"
         });
     }
     catch (error) {
@@ -61,32 +61,13 @@ const loginUser = async (req, res, next) => {
         const userData = queryResult[0];
         // Verify the password using bcrypt
         const isPasswordValid = await bcrypt_1.default.compare(password, userData.password);
-        console.log("Kata sandi yang di-hash dari basis data:", userData.password, password);
         if (!isPasswordValid) {
             return res.status(401).json({
                 success: false,
                 message: "Invalid username or password",
             });
         }
-        // const customKey: string = 'j_sign'
-        // const token = jwt.sign(
-        //   { id: userData.id, username: userData.username, role: userData.role },
-        //   process.env.SECRET_KEY || "default-secret-key",
-        //   { expiresIn: "1y" }, 
-        // );
-        const customKey = 'j_sign';
-        const user = {
-            id: '123',
-            username: 'exampleUser',
-            role: 'user',
-        };
-        const token = jsonwebtoken_1.default.sign({
-            id: user.id,
-            username: user.username,
-            role: user.role,
-        }, customKey, // Use your custom signing key here
-        { expiresIn: '1y' });
-        console.log(token);
+        const token = jsonwebtoken_1.default.sign({ id: userData.id, username: userData.username, role: userData.role }, secretKey, { expiresIn: "1h" });
         res.status(200).json({
             success: true,
             message: "Login successful",
