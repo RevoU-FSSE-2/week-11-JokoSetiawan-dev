@@ -48,7 +48,6 @@ const openApiValidator = new OpenApiValidator({
 });
 
 app.use(bodyParser.json());
-
 app.use(express.json());
 app.use(routes);
 
