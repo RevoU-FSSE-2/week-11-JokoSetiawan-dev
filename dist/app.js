@@ -53,7 +53,7 @@ db_connection_1.db.connect(function (err) {
 });
 // Serve Swagger UI
 const swaggerDocument = yaml.load(fs_1.default.readFileSync(apiSpecPath, "utf8")) || {};
-app.use("/", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
+app.use("/swagger", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
 // Create an OpenApiValidator instance and configure it
 const openApiValidator = new openapi_validator_1.OpenApiValidator({
     apiSpec: apiSpecPath,

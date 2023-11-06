@@ -38,7 +38,7 @@ interface SwaggerDocument {
 // Serve Swagger UI
 const swaggerDocument =
   (yaml.load(fs.readFileSync(apiSpecPath, "utf8")) as SwaggerDocument) || {};
-app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Create an OpenApiValidator instance and configure it
 const openApiValidator = new OpenApiValidator({
