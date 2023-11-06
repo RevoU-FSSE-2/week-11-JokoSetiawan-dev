@@ -67,6 +67,6 @@ routes.use("/auth", auth_route_1.default);
 routes.use("/user", auth_middleware_1.authenticationMiddleware, user_route_1.default);
 routes.use("/sellout", auth_middleware_1.authenticationMiddleware, sellout_route_1.default);
 app.use(error_handling_1.default);
-// app.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
