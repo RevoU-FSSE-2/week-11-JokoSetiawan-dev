@@ -3,7 +3,7 @@ import { db } from '../config/db.connection';
 
 const findAllSellout = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const result = await db.query("SELECT * FROM sellout_table");
+        const result = await db.promise().query("SELECT * FROM sellout_table");
         res.status(200).json({
             success: true,
             data: result[0]
@@ -19,7 +19,7 @@ const findAllSellout = async (req: Request, res: Response, next: NextFunction) =
 const findSelloutId = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;
-      const getById = await db.query(`SELECT 
+      const getById = await db.promise().query(`SELECT 
       st.id,
       st.user_id,
       st.sku,
@@ -48,7 +48,7 @@ const findSelloutId = async (req: Request, res: Response, next: NextFunction) =>
   const inputSellout = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const body = req.body;
-      const result: any = await db.query(
+      const result: any = await db.promise().query(
         `insert into sellout_tracking.sellout_table (user_id, sku, quantity, amount)
       values (?,?,?,?)`,
         [body.user_id, body.sku, body.quantity, body.amount])
@@ -73,7 +73,7 @@ const findSelloutId = async (req: Request, res: Response, next: NextFunction) =>
       const id = req.params.id;
       const body = req.body;
   
-      const result: any = await db.query(
+      const result: any = await db.promise().query(
         `UPDATE sellout_tracking.sellout_table
            SET user_id = ?, sku = ?, quantity = ?, amount = ?
            WHERE id = ?`,
@@ -95,7 +95,7 @@ const findSelloutId = async (req: Request, res: Response, next: NextFunction) =>
   const deleteSellout = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;
-      const result: any = await db.query(
+      const result: any = await db.promise().query(
         `delete from sellout_tracking.sellout_table where id = ?`,
         id
       );

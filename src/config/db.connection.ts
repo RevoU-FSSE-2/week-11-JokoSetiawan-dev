@@ -8,4 +8,4 @@ export const db = mysql.createConnection({
     database: DBConfig.DB,
     port: +DBConfig.PORT!,
     connectTimeout: 20000
-}).promise()
+})

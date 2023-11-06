@@ -3,7 +3,7 @@ import { db } from "../config/db.connection";
 
 const findAllUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await db.query("SELECT id, name, role FROM user_table");
+    const result = await db.promise().query("SELECT id, name, role FROM user_table");
     res.status(200).json({
       success: true,
       data: result[0],
@@ -19,7 +19,7 @@ const findAllUser = async (req: Request, res: Response, next: NextFunction) => {
 const findUserId = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
-    const getById = await db.query(
+    const getById = await db.promise().query(
       `SELECT
       subquery.id,
       subquery.name,
@@ -62,13 +62,13 @@ const findUserId = async (req: Request, res: Response, next: NextFunction) => {
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const body = req.body;
-    const result: any = await db.query(
+    const result: any = await db.promise().query(
       `insert into sellout_tracking.user_table (name, role, target)
       values (?,?,?)`,
       [body.name, body.role, body.target]
     );
     const id = result[0].insertId;
-    const getId: any = await db.query(
+    const getId: any = await db.promise().query(
       `select * from user_table where id =` + id
     );
     console.log(getId);
@@ -89,7 +89,7 @@ const updateUserData = async (req: Request, res: Response, next: NextFunction) =
     const id = req.params.id;
     const body = req.body;
 
-    const result: any = await db.query(
+    const result: any = await db.promise().query(
       `UPDATE sellout_tracking.user_table
          SET name = ?, role = ?, target = ?
          WHERE id = ?`,
@@ -111,7 +111,7 @@ const updateUserData = async (req: Request, res: Response, next: NextFunction) =
 const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
-    const result: any = await db.query(
+    const result: any = await db.promise().query(
       `delete from sellout_tracking.user_table where id = ?`,
       id
     );

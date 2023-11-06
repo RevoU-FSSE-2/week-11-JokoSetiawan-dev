@@ -26,7 +26,7 @@ const userRegister = async (
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const insertResult: any = await db.query(
+    const insertResult: any = await db.promise().query(
       `INSERT INTO sellout_tracking.auth_table (username, password, role)
       VALUES (?, ?, ?)`,
       [username, hashedPassword, role]
@@ -64,7 +64,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 
     // Retrieve the user from the database by username
     const getUserQuery = `SELECT * FROM sellout_tracking.auth_table WHERE username = '${username}'`;
-    const [queryResult]: any = await db.query(getUserQuery);
+    const [queryResult]: any = await db.promise().query(getUserQuery);
 
     if (queryResult.length === 0) {
       return res.status(401).json({
