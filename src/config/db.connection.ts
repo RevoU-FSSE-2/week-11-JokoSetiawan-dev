@@ -5,5 +5,7 @@ export const db = mysql.createConnection({
     host: DBConfig.HOST,
     user: DBConfig.USER,
     password: DBConfig.PASSWORD,
-    database: DBConfig.DB
+    database: DBConfig.DB,
+    port: +DBConfig.PORT!,
+    connectTimeout: 20000
 }).promise()

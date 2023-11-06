@@ -40,10 +40,10 @@ const openapi_validator_1 = require("express-openapi-validator/dist/openapi.vali
 const fs_1 = __importDefault(require("fs"));
 const routes = express_1.default.Router();
 const app = (0, express_1.default)();
-const apiSpecPath = './doc/openapi.yaml'; // Adjust the path to your OpenAPI spec
+const apiSpecPath = "./doc/openapi.yaml"; // Adjust the path to your OpenAPI spec
 // Serve Swagger UI
-const swaggerDocument = yaml.load(fs_1.default.readFileSync(apiSpecPath, 'utf8')) || {};
-app.use('/', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
+const swaggerDocument = yaml.load(fs_1.default.readFileSync(apiSpecPath, "utf8")) || {};
+app.use("/", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
 // Create an OpenApiValidator instance and configure it
 const openApiValidator = new openapi_validator_1.OpenApiValidator({
     apiSpec: apiSpecPath,
@@ -54,9 +54,9 @@ const port = process.env.PORT;
 app.use(body_parser_1.default.json());
 app.use(express_1.default.json());
 app.use(routes);
-routes.use('/auth', auth_route_1.default);
-routes.use('/user', auth_middleware_1.authenticationMiddleware, user_route_1.default);
-routes.use('/sellout', auth_middleware_1.authenticationMiddleware, sellout_route_1.default);
+routes.use("/auth", auth_route_1.default);
+routes.use("/user", auth_middleware_1.authenticationMiddleware, user_route_1.default);
+routes.use("/sellout", auth_middleware_1.authenticationMiddleware, sellout_route_1.default);
 app.use(error_handling_1.default);
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

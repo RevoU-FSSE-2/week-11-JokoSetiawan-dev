@@ -10,5 +10,7 @@ exports.db = mysql2_1.default.createConnection({
     host: db_config_1.DBConfig.HOST,
     user: db_config_1.DBConfig.USER,
     password: db_config_1.DBConfig.PASSWORD,
-    database: db_config_1.DBConfig.DB
+    database: db_config_1.DBConfig.DB,
+    port: +db_config_1.DBConfig.PORT,
+    connectTimeout: 20000
 }).promise();

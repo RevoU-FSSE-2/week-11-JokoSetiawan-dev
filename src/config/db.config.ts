@@ -3,4 +3,5 @@ export const DBConfig = {
     USER: process.env.DB_USERNAME,
     PASSWORD: process.env.DB_PASSWORD,
     DB: process.env.DB_NAME,
+    PORT: process.env.DB_PORT,
 }
