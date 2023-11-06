@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 require("dotenv/config");
 const body_parser_1 = __importDefault(require("body-parser"));
+const db_connection_1 = require("./config/db.connection");
 const user_route_1 = __importDefault(require("./routes/user.route"));
 const sellout_route_1 = __importDefault(require("./routes/sellout.route"));
 const auth_route_1 = __importDefault(require("./routes/auth.route"));
@@ -41,6 +42,15 @@ const fs_1 = __importDefault(require("fs"));
 const routes = express_1.default.Router();
 const app = (0, express_1.default)();
 const apiSpecPath = "./doc/openapi.yaml"; // Adjust the path to your OpenAPI spec
+// Define a custom type for the Swagger document
+const port = process.env.PORT;
+db_connection_1.db.connect(function (err) {
+    if (err) {
+        console.log(err);
+        throw err;
+    }
+    console.log("DB Connected!");
+});
 // Serve Swagger UI
 const swaggerDocument = yaml.load(fs_1.default.readFileSync(apiSpecPath, "utf8")) || {};
 app.use("/", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
@@ -50,7 +60,6 @@ const openApiValidator = new openapi_validator_1.OpenApiValidator({
     validateRequests: true,
     validateResponses: true, // Enable response validation
 });
-const port = process.env.PORT;
 app.use(body_parser_1.default.json());
 app.use(express_1.default.json());
 app.use(routes);

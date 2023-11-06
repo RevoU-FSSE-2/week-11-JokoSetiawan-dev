@@ -20,7 +20,7 @@ const userRegister = async (req, res, next) => {
             });
         }
         const hashedPassword = await bcrypt_1.default.hash(password, saltRounds);
-        const insertResult = await db_connection_1.db.query(`INSERT INTO sellout_tracking.auth_table (username, password, role)
+        const insertResult = await db_connection_1.db.promise().query(`INSERT INTO sellout_tracking.auth_table (username, password, role)
       VALUES (?, ?, ?)`, [username, hashedPassword, role]);
         const id = 123; // Replace with the actual user ID from the database
         const token = jsonwebtoken_1.default.sign({ id, username, role }, secretKey, {
@@ -50,7 +50,7 @@ const loginUser = async (req, res, next) => {
         }
         // Retrieve the user from the database by username
         const getUserQuery = `SELECT * FROM sellout_tracking.auth_table WHERE username = '${username}'`;
-        const [queryResult] = await db_connection_1.db.query(getUserQuery);
+        const [queryResult] = await db_connection_1.db.promise().query(getUserQuery);
         if (queryResult.length === 0) {
             return res.status(401).json({
                 success: false,

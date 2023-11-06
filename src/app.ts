@@ -21,6 +21,16 @@ const app = express();
 const apiSpecPath = "./doc/openapi.yaml"; // Adjust the path to your OpenAPI spec
 
 // Define a custom type for the Swagger document
+
+const port = process.env.PORT;
+
+db.connect(function (err) {
+  if (err) {
+    console.log(err)
+    throw err;
+  }
+  console.log("DB Connected!");
+});
 interface SwaggerDocument {
   [key: string]: any;
 }
@@ -36,8 +46,6 @@ const openApiValidator = new OpenApiValidator({
   validateRequests: true, // Enable request validation
   validateResponses: true, // Enable response validation
 });
-
-const port = process.env.PORT;
 
 app.use(bodyParser.json());
 

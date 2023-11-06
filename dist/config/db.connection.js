@@ -13,4 +13,4 @@ exports.db = mysql2_1.default.createConnection({
     database: db_config_1.DBConfig.DB,
     port: +db_config_1.DBConfig.PORT,
     connectTimeout: 20000
-}).promise();
+});
