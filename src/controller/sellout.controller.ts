@@ -3,10 +3,10 @@ import { db } from '../config/db.connection';
 
 const findAllSellout = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const result = await db.promise().query("SELECT * FROM sellout_table");
+        const [result] = await db.promise().query("SELECT * FROM sellout_table");
         res.status(200).json({
             success: true,
-            data: result[0]
+            data: result
         });
     } catch (error) {
         res.status(500).json({
@@ -19,7 +19,7 @@ const findAllSellout = async (req: Request, res: Response, next: NextFunction) =
 const findSelloutId = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;
-      const getById = await db.promise().query(`SELECT 
+      const [getById] = await db.promise().query(`SELECT 
       st.id,
       st.user_id,
       st.sku,
@@ -35,7 +35,7 @@ const findSelloutId = async (req: Request, res: Response, next: NextFunction) =>
   
       res.status(200).json({
         success: true,
-        data: getById[0],
+        data: getById,
       });
     } catch (error) {
       res.status(500).json({
@@ -53,12 +53,12 @@ const findSelloutId = async (req: Request, res: Response, next: NextFunction) =>
       values (?,?,?,?)`,
         [body.user_id, body.sku, body.quantity, body.amount])
         const id = result[0].insertId;
-        const getId: any = await db.query(
+        const [getId]: any = await db.query(
         `select * from sellout_table where id =` + id)
         console.log(getId)
         res.status(200).json({
           success: true,
-          data: getId[0],
+          data: getId,
         });
     } catch (error) {
       res.status(500).json({
@@ -73,7 +73,7 @@ const findSelloutId = async (req: Request, res: Response, next: NextFunction) =>
       const id = req.params.id;
       const body = req.body;
   
-      const result: any = await db.promise().query(
+      const [result]: any = await db.promise().query(
         `UPDATE sellout_tracking.sellout_table
            SET user_id = ?, sku = ?, quantity = ?, amount = ?
            WHERE id = ?`,
@@ -82,7 +82,7 @@ const findSelloutId = async (req: Request, res: Response, next: NextFunction) =>
       console.log(result);
       res.status(200).json({
         id: id,
-        data: result[0],
+        data: result,
       });
     } catch (error) {
       res.status(500).json({

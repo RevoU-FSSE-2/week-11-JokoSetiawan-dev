@@ -3,10 +3,10 @@ import { db } from "../config/db.connection";
 
 const findAllUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await db.promise().query("SELECT id, name, role FROM user_table");
+    const [result] = await db.promise().query("SELECT id, name, role FROM user_table");
     res.status(200).json({
       success: true,
-      data: result[0],
+      data: result,
     });
   } catch (error) {
     res.status(500).json({
@@ -19,7 +19,7 @@ const findAllUser = async (req: Request, res: Response, next: NextFunction) => {
 const findUserId = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
-    const getById = await db.promise().query(
+    const [getById] = await db.promise().query(
       `SELECT
       subquery.id,
       subquery.name,
@@ -49,7 +49,7 @@ const findUserId = async (req: Request, res: Response, next: NextFunction) => {
 
     res.status(200).json({
       success: true,
-      data: getById[0],
+      data: getById,
     });
   } catch (error) {
     res.status(500).json({
@@ -68,13 +68,13 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       [body.name, body.role, body.target]
     );
     const id = result[0].insertId;
-    const getId: any = await db.promise().query(
+    const [getId]: any = await db.promise().query(
       `select * from user_table where id =` + id
     );
     console.log(getId);
     res.status(200).json({
       success: true,
-      data: getId[0],
+      data: getId,
     });
   } catch (error) {
     res.status(500).json({
@@ -89,7 +89,7 @@ const updateUserData = async (req: Request, res: Response, next: NextFunction) =
     const id = req.params.id;
     const body = req.body;
 
-    const result: any = await db.promise().query(
+    const [result]: any = await db.promise().query(
       `UPDATE sellout_tracking.user_table
          SET name = ?, role = ?, target = ?
          WHERE id = ?`,
@@ -98,7 +98,7 @@ const updateUserData = async (req: Request, res: Response, next: NextFunction) =
     console.log(result);
     res.status(200).json({
       id: id,
-      data: result[0],
+      data: result,
     });
   } catch (error) {
     res.status(500).json({
