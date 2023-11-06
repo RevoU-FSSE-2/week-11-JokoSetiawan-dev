@@ -27,7 +27,7 @@ const userRegister = async (
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     const insertResult: any = await db.promise().query(
-      `INSERT INTO sellout_tracking.auth_table (username, password, role)
+      `INSERT INTO auth_table (username, password, role)
       VALUES (?, ?, ?)`,
       [username, hashedPassword, role]
     );
