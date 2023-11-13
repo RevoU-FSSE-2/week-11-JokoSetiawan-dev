@@ -20,7 +20,7 @@ const userRegister = async (req, res, next) => {
             });
         }
         const hashedPassword = await bcrypt_1.default.hash(password, saltRounds);
-        const insertResult = await db_connection_1.db.promise().query(`INSERT INTO auth_table (username, password, role)
+        const insertResult = await db_connection_1.db.promise().query(`INSERT INTO sellout_tracking.auth_table (username, password, role)
       VALUES (?, ?, ?)`, [username, hashedPassword, role]);
         const id = 123; // Replace with the actual user ID from the database
         const token = jsonwebtoken_1.default.sign({ id, username, role }, secretKey, {

@@ -51,14 +51,12 @@ db_connection_1.db.connect(function (err) {
     }
     console.log("DB Connected!");
 });
-// Serve Swagger UI
 const swaggerDocument = yaml.load(fs_1.default.readFileSync(apiSpecPath, "utf8")) || {};
-app.use("/swagger", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
-// Create an OpenApiValidator instance and configure it
+app.use("/apidoc", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
 const openApiValidator = new openapi_validator_1.OpenApiValidator({
     apiSpec: apiSpecPath,
     validateRequests: true,
-    validateResponses: true, // Enable response validation
+    validateResponses: true,
 });
 app.use(body_parser_1.default.json());
 app.use(express_1.default.json());

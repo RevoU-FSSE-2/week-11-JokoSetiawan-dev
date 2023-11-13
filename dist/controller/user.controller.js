@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const db_connection_1 = require("../config/db.connection");
 const findAllUser = async (req, res, next) => {
     try {
-        const [result] = await db_connection_1.db.promise().query("SELECT id, name, role FROM user_table");
+        const [result] = await db_connection_1.db.promise().query("SELECT id, name, role, target, achievement, gap FROM user_table");
         res.status(200).json({
             success: true,
             data: result,
@@ -73,6 +73,7 @@ const createUser = async (req, res, next) => {
             success: false,
             message: "Create User Failed",
         });
+        console.log(error);
     }
 };
 const updateUserData = async (req, res, next) => {

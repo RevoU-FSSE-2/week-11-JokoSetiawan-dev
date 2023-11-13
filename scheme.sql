@@ -13,8 +13,8 @@ CREATE TABLE user_table (
     name VARCHAR(255) NOT NULL,
     role ENUM('admin', 'sales') NOT NULL,
     target INT NOT NULL,
-    achievement INT NOT NULL,
-    gap INT NOT NULL
+    achievement INT NOT NULL DEFAULT 0,
+    gap INT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE sellout_table (

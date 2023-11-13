@@ -50,7 +50,7 @@ const inputSellout = async (req, res, next) => {
         const result = await db_connection_1.db.promise().query(`insert into sellout_tracking.sellout_table (user_id, sku, quantity, amount)
       values (?,?,?,?)`, [body.user_id, body.sku, body.quantity, body.amount]);
         const id = result[0].insertId;
-        const [getId] = await db_connection_1.db.query(`select * from sellout_table where id =` + id);
+        const [getId] = await db_connection_1.db.promise().query(`select * from sellout_table where id =` + id);
         console.log(getId);
         res.status(200).json({
             success: true,
@@ -62,6 +62,7 @@ const inputSellout = async (req, res, next) => {
             success: false,
             message: "Input Sellout Failed",
         });
+        console.log(error);
     }
 };
 const updateSelloutData = async (req, res, next) => {
