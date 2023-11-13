@@ -224,7 +224,7 @@ paths:
               $ref: "#/components/schemas/AllUserResponse"
       responses:
         "200":
-          description: "Invalid Request"
+          description: "Get User data"
         "401":
           description: "Unautorized"
     put:
@@ -247,7 +247,7 @@ paths:
               $ref: "#/components/schemas/UserUpdate"
       responses:
         "200":
-          description: "Invalid Request"
+          description: "Create User Data successfully" 
         "401":
           description: "Unautorized"
     delete:
@@ -331,7 +331,7 @@ paths:
               $ref: "#/components/schemas/AllSelloutResponse"
       responses:
         "200":
-          description: "Invalid Request"
+          description: "Success Get Sellout"
         "401":
           description: "Unautorized"
     put:
@@ -354,7 +354,7 @@ paths:
               $ref: "#/components/schemas/SelloutUpdate"
       responses:
         "200":
-          description: "Invalid Request"
+          description: "Sellout Updated Successfully"
         "401":
           description: "Unautorized"
     delete:

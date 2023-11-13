@@ -3,7 +3,7 @@ import { db } from "../config/db.connection";
 
 const findAllUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const [result] = await db.promise().query("SELECT id, name, role FROM user_table");
+    const [result] = await db.promise().query("SELECT id, name, role, target, achievement, gap FROM user_table");
     res.status(200).json({
       success: true,
       data: result,
@@ -81,6 +81,8 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       success: false,
       message: "Create User Failed",
     });
+    console.log(error);
+    
   }
 };
 

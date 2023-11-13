@@ -1,5 +1,6 @@
 import {Request, Response, NextFunction} from 'express';
 import { db } from '../config/db.connection';
+import { error } from 'express-openapi-validator';
 
 const findAllSellout = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -53,7 +54,7 @@ const findSelloutId = async (req: Request, res: Response, next: NextFunction) =>
       values (?,?,?,?)`,
         [body.user_id, body.sku, body.quantity, body.amount])
         const id = result[0].insertId;
-        const [getId]: any = await db.query(
+        const [getId]: any = await db.promise().query(
         `select * from sellout_table where id =` + id)
         console.log(getId)
         res.status(200).json({
@@ -65,7 +66,10 @@ const findSelloutId = async (req: Request, res: Response, next: NextFunction) =>
         success: false,
         message: "Input Sellout Failed",
       });
+      console.log(error);
+      
     }
+    
   };
 
   const updateSelloutData = async (req: Request, res: Response, next: NextFunction) => {

@@ -35,16 +35,14 @@ interface SwaggerDocument {
   [key: string]: any;
 }
 
-// Serve Swagger UI
 const swaggerDocument =
   (yaml.load(fs.readFileSync(apiSpecPath, "utf8")) as SwaggerDocument) || {};
-app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/apidoc", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Create an OpenApiValidator instance and configure it
 const openApiValidator = new OpenApiValidator({
   apiSpec: apiSpecPath,
-  validateRequests: true, // Enable request validation
-  validateResponses: true, // Enable response validation
+  validateRequests: true,
+  validateResponses: true,
 });
 
 app.use(bodyParser.json());
