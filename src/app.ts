@@ -15,10 +15,10 @@ import * as yaml from "js-yaml"; // Import js-yaml
 import { OpenApiValidator } from "express-openapi-validator/dist/openapi.validator";
 import fs from "fs";
 
+const app = express();
 const port = process.env.PORT;
 const routes = express.Router();
 
-const app = express();
 
 db.connect(function (err) {
   if (err) {
