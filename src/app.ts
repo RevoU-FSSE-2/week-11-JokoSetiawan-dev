@@ -53,6 +53,6 @@ routes.use("/sellout", authenticationMiddleware, selloutRoutes);
 
 app.use(errorHandlerMiddleware);
 
-// app.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
