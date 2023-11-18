@@ -15,14 +15,10 @@ import * as yaml from "js-yaml"; // Import js-yaml
 import { OpenApiValidator } from "express-openapi-validator/dist/openapi.validator";
 import fs from "fs";
 
+const port = process.env.PORT;
 const routes = express.Router();
 
 const app = express();
-const apiSpecPath = "./doc/openapi.yaml"; // Adjust the path to your OpenAPI spec
-
-// Define a custom type for the Swagger document
-
-const port = process.env.PORT;
 
 db.connect(function (err) {
   if (err) {
@@ -31,6 +27,8 @@ db.connect(function (err) {
   }
   console.log("DB Connected!");
 });
+
+const apiSpecPath = "../doc/openapi.yaml"; 
 interface SwaggerDocument {
   [key: string]: any;
 }
