@@ -16,7 +16,7 @@ import { OpenApiValidator } from "express-openapi-validator/dist/openapi.validat
 import fs from "fs";
 
 const app = express();
-const port = process.env.PORT;
+const port = 10000;
 const routes = express.Router();
 
 
