@@ -39,9 +39,10 @@ const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const yaml = __importStar(require("js-yaml")); // Import js-yaml
 const openapi_validator_1 = require("express-openapi-validator/dist/openapi.validator");
 const fs_1 = __importDefault(require("fs"));
-const port = process.env.PORT;
-const routes = express_1.default.Router();
 const app = (0, express_1.default)();
+const ip = '0.0.0.0';
+const port = 10000;
+const routes = express_1.default.Router();
 db_connection_1.db.connect(function (err) {
     if (err) {
         console.log(err);
@@ -49,7 +50,7 @@ db_connection_1.db.connect(function (err) {
     }
     console.log("DB Connected!");
 });
-const apiSpecPath = "../doc/openapi.yaml";
+const apiSpecPath = "./doc/openapi.yaml";
 const swaggerDocument = yaml.load(fs_1.default.readFileSync(apiSpecPath, "utf8")) || {};
 app.use("/apidoc", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
 const openApiValidator = new openapi_validator_1.OpenApiValidator({
@@ -64,6 +65,6 @@ routes.use("/auth", auth_route_1.default);
 routes.use("/user", auth_middleware_1.authenticationMiddleware, user_route_1.default);
 routes.use("/sellout", auth_middleware_1.authenticationMiddleware, sellout_route_1.default);
 app.use(error_handling_1.default);
-// app.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
+// app.listen(port, ip, () => {
+//   console.log(`Server running on http://${ip}:${port}/`);
 // });
