@@ -29,20 +29,20 @@ db.connect(function (err) {
   console.log("DB Connected!");
 });
 
-const apiSpecPath = "./doc/openapi.yaml"; 
-interface SwaggerDocument {
-  [key: string]: any;
-}
+// const apiSpecPath = "./doc/openapi.yaml"; 
+// interface SwaggerDocument {
+//   [key: string]: any;
+// }
 
-const swaggerDocument =
-  (yaml.load(fs.readFileSync(apiSpecPath, "utf8")) as SwaggerDocument) || {};
-app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// const swaggerDocument =
+//   (yaml.load(fs.readFileSync(apiSpecPath, "utf8")) as SwaggerDocument) || {};
+// app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-const openApiValidator = new OpenApiValidator({
-  apiSpec: apiSpecPath,
-  validateRequests: true,
-  validateResponses: true,
-});
+// const openApiValidator = new OpenApiValidator({
+//   apiSpec: apiSpecPath,
+//   validateRequests: true,
+//   validateResponses: true,
+// });
 
 app.use(bodyParser.json());
 app.use(express.json());
