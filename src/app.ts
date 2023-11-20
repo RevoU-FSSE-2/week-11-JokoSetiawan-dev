@@ -16,6 +16,7 @@ import { OpenApiValidator } from "express-openapi-validator/dist/openapi.validat
 import fs from "fs";
 
 const app = express();
+const ip = '0.0.0.0'
 const port = 10000;
 const routes = express.Router();
 
@@ -28,7 +29,7 @@ db.connect(function (err) {
   console.log("DB Connected!");
 });
 
-const apiSpecPath = "../doc/openapi.yaml"; 
+const apiSpecPath = "./doc/openapi.yaml"; 
 interface SwaggerDocument {
   [key: string]: any;
 }
@@ -53,6 +54,6 @@ routes.use("/sellout", authenticationMiddleware, selloutRoutes);
 
 app.use(errorHandlerMiddleware);
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+app.listen(port, ip, () => {
+  console.log(`Server running on http://${ip}:${port}/`);
 });
